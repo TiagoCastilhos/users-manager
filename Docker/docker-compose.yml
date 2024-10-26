@@ -1,0 +1,27 @@
+services:
+  database:
+    image: postgres
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_PASSWORD=MYSECRETPASSWORD
+      - PGUSER=postgres
+      - POSTGRES_DB=users_manager
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+networks:
+  net:
+    driver: overlay
