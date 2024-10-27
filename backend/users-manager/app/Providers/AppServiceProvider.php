@@ -6,19 +6,20 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
+     /**
+     * All of the container bindings that should be registered.
+     *
+     * @var array
      */
-    public function register(): void
-    {
-        //
-    }
-
+    public $bindings = [
+    ];
+ 
     /**
-     * Bootstrap any application services.
+     * All of the container singletons that should be registered.
+     *
+     * @var array
      */
-    public function boot(): void
-    {
-        //
-    }
+    public $singletons = [
+        UsersServiceInterface::class => UsersService::class,
+    ];
 }
