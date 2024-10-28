@@ -9,4 +9,5 @@ interface UsersServiceInterface
 {
     public function getAll(): iterable;
     public function create(UserPostRequest $request): ?User;
+    public function delete(int $id): bool;
 }

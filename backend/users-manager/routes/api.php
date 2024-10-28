@@ -9,3 +9,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/users', [ UsersController::class, 'get']);
 Route::post('/users', [ UsersController::class, 'create']);
+Route::delete('/users/{id}', [ UsersController::class, 'delete']);

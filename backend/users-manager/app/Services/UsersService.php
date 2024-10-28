@@ -46,4 +46,8 @@ class UsersService implements UsersServiceInterface
             return null;
         }
     }
+
+    public function delete(int $id): bool {
+        return User::destroy($id) > 0;
+    }
 }
