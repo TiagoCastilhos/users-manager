@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Phone extends Model
 {
     protected $fillable = [
-        'countryCode',
-        'areaCode',
+        'country_code',
+        'area_code',
         'number',
+        'user_id'
     ];
 
-    protected $attributes = [
-        'countryCode' => 55,
+    protected $hidden = [
+        'id',
+        'user_id',
     ];
 
     public function user(): BelongsTo

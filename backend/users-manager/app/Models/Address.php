@@ -11,6 +11,12 @@ class Address extends Model
         'country',
         'state',
         'city',
+        'user_id'
+    ];
+
+    protected $hidden = [
+        'id',
+        'user_id',
     ];
 
     public function user(): BelongsTo

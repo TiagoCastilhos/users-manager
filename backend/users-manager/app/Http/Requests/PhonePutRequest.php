@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UserPostRequest extends FormRequest
+class PhonePutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,12 +31,9 @@ class UserPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstName' => 'required|min:2|max:50',
-            'lastName' => 'required|min:2|max:50',
-            'userName' => 'required|min:4|max:16',
-            'email' => 'required|unique:users,email|email|max:255',
-            'birthDate' => 'required|date',
-            'password' => 'required|min:6',
+            'countryCode' => 'required|min:2|max:6',
+            'areaCode' => 'required|min:2|max:10',
+            'number' => 'required|min:4|max:20',
         ];
     }
 }

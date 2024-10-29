@@ -2,7 +2,11 @@
 
 namespace App\Services;
 
+use App\Http\Requests\AddressPutRequest;
+use App\Http\Requests\PhonePutRequest;
 use App\Http\Requests\UserPostRequest;
+use App\Models\Address;
+use App\Models\Phone;
 use App\Services\Abstractions\UsersServiceInterface;
 use App\Models\User;
 use DB;
@@ -20,7 +24,10 @@ class UsersService implements UsersServiceInterface
 
     public function getAll(): iterable
     {
-        return User::all();
+        return User::with([
+            'phone',
+            'address'
+        ])->get();
     }
 
     public function create(UserPostRequest $request): ?User
@@ -47,7 +54,66 @@ class UsersService implements UsersServiceInterface
         }
     }
 
-    public function delete(int $id): bool {
+    public function delete(int $id): bool
+    {
         return User::destroy($id) > 0;
+    }
+
+    public function upsertAddress(AddressPutRequest $address, int $userId): bool
+    {
+        //ToDo: Use a transaction to avoid deleting an address and db failed to insert the new value
+        if (!$this->deleteAddress($userId)) {
+            return false;
+        }
+
+        $address = Address::create([
+            "country" => $address->country,
+            "state" => $address->state,
+            "city" => $address->city,
+            "user_id" => $userId
+        ]);
+
+        return true;
+    }
+
+    public function upsertPhone(PhonePutRequest $phone, int $userId): bool
+    {
+        //ToDo: Use a transaction to avoid deleting a phone and db failed to insert the new value
+        if (!$this->deletePhone($userId)) {
+            return false;
+        }
+
+        $phone = Phone::create([
+            "country_code" => $phone->countryCode,
+            "area_code" => $phone->areaCode,
+            "number" => $phone->number,
+            "user_id" => $userId
+        ]);
+
+        return true;
+    }
+
+    public function deleteAddress(int $userId): bool
+    {
+        $user = User::firstWhere('id', '=', $userId);
+
+        if ($user == null) {
+            return false;
+        }
+
+        Address::where('user_id', '=', $userId)?->delete();
+        return true;
+    }
+
+    public function deletePhone(int $userId): bool
+    {
+        $user = User::firstWhere('id', '=', $userId);
+
+        if ($user == null) {
+            return false;
+        }
+
+        Phone::where('user_id', '=', $userId)?->delete();
+        return true;
     }
 }

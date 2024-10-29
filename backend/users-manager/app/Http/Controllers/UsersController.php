@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddressPutRequest;
+use App\Http\Requests\PhonePutRequest;
 use App\Http\Requests\UserPostRequest;
 use App\Services\UsersService;
 use Illuminate\Http\JsonResponse;
@@ -47,5 +49,65 @@ class UsersController extends Controller
         return response()->json([
             'error' => "Could not delete the user id $id"
         ], 400);
+    }
+
+    public function updateAddress(AddressPutRequest $request, $id): JsonResponse
+    {
+        $result = $this->usersService->upsertAddress($request, $id);
+
+        if ($result) {
+            return response()->json([
+                "id"=> $id
+            ], 201);
+        }
+
+        return response()->json([
+            'error' => "Could not find user $id"
+        ], 404);
+    }
+
+    public function updatePhone(PhonePutRequest $request, $id): JsonResponse
+    {
+        $result = $this->usersService->upsertPhone($request, $id);
+
+        if ($result) {
+            return response()->json([
+                "id"=> $id
+            ], 201);
+        }
+
+        return response()->json([
+            'error' => "Could not find user $id"
+        ], 404);
+    }
+
+    public function deleteAddress(Request $request, $id): JsonResponse
+    {
+        $result = $this->usersService->deleteAddress($id);
+
+        if ($result) {
+            return response()->json([
+                "id"=> $id
+            ], 200);
+        }
+
+        return response()->json([
+            'error' => "Could not find user $id"
+        ], 404);
+    }
+
+    public function deletePhone(Request $request, $id): JsonResponse
+    {
+        $result = $this->usersService->deletePhone($id);
+
+        if ($result) {
+            return response()->json([
+                "id"=> $id
+            ], 200);
+        }
+
+        return response()->json([
+            'error' => "Could not find user $id"
+        ], 404);
     }
 }
