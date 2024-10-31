@@ -1,0 +1,31 @@
+@import "../styles/colors.module.scss";
+
+.container {
+    background-color: darken($color: $background-color, $amount: 10);
+    height: 100%;
+
+    nav {
+        height: 100%;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            list-style-type: none;
+            place-content: space-around;
+            width: fit-content;
+            height: 100%;
+        }
+
+        li {
+            margin: 0 6px;
+            display: flex;
+
+            a {
+                align-self: center;
+                text-decoration: none;
+                padding: 16px 32px;
+            }
+        }
+    }
+}

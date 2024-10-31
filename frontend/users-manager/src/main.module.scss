@@ -1,0 +1,15 @@
+@import "./styles/colors.module.scss";
+
+.container {
+    .navbar {
+        position: static;
+        height: 3.5em;
+    }
+
+    .app {
+        background-color: $background-color;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
+}
