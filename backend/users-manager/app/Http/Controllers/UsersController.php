@@ -7,7 +7,7 @@ use App\Http\Requests\PhonePutRequest;
 use App\Http\Requests\UserPostRequest;
 use App\Services\UsersService;
 use Illuminate\Http\JsonResponse;
-use Request;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -18,7 +18,7 @@ class UsersController extends Controller
         $this->usersService = $usersService;
     }
 
-    public function get(): JsonResponse
+    public function get(Request $request): JsonResponse
     {
         return response()->json($this->usersService->getAll(), 200);
     }

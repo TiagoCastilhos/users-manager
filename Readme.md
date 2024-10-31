@@ -16,8 +16,18 @@ Go to \backend\users-manager
 To interact with the api, you should send the desired http request, dependeding on what you're trying to do.
 
 #### Examples:
+Authenticate and create user don't require authentication. 
+Nny other endpoint will require a Bearer token, issued by authenticate endpoint, to grant access.
 
-GET /api/users: Returns all users from database, including related entities.
+##### Anonymous endpoints
+
+POST /api/authenticate
+``` json
+{
+    "email": "your@email.com",
+    "password": "yourpassword"
+}
+```
 
 POST /api/users: Create a user
 ``` json
@@ -30,6 +40,9 @@ POST /api/users: Create a user
     "email": "test2@test.com"
 }
 ```
+##### Protected endpoints
+
+GET /api/users: Returns all users from database, including related entities. This is only accessible by admin users.
 
 DELETE /api/users/{id}: Delete a user
 
