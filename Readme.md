@@ -6,9 +6,10 @@ The app is using containers to ease local hosting process.
 ## Host locally
 
 Go to \backend\users-manager
+1. [Create an alias](https://laravel.com/docs/11.x/sail#configuring-a-shell-alias) for `sail` commands: alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
 
-1. Run `sail up` to create all required containers.
-2. Run `sail php artisan migrate` to migrate the database.
+2. Run `sail up` to create all required containers.
+3. Run `sail php artisan migrate` to migrate the database.
 (Optional) 3. Run `sail php artisan db:seed` tp create the admin user.
 
 ### API requests
