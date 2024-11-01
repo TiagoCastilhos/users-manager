@@ -1,0 +1,1 @@
+sail up -d --wait && sail php artisan migrate && sail php artisan db:seed
