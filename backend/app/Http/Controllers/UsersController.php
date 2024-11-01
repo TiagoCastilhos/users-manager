@@ -8,6 +8,7 @@ use App\Http\Requests\UserPostRequest;
 use App\Services\UsersService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use UserResource;
 
 class UsersController extends Controller
 {

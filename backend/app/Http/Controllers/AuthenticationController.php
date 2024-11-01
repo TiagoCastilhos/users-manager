@@ -18,6 +18,6 @@ class AuthenticationController extends Controller
 
         $token = $user->createToken("access_token", ['*'], now()->addDay());
 
-        return ['token' => $token->plainTextToken];
+        return response(['token' => $token->plainTextToken, 'user' => $user], 200);
     }
 }
