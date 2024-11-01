@@ -1,20 +1,17 @@
-# PHP CRUD
+# Users Management project
 
-This is a crud developed with Laravel + react js.
+This project is a CRUD http rest APi, developed with Laravel, combined with a SPA developed with react js.
 The app is using containers to ease local hosting process.
 
 ## Host locally
 
-Go to \backend\users-manager
-1. [Create an alias](https://laravel.com/docs/11.x/sail#configuring-a-shell-alias) for `sail` commands: alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
-
-2. Run `sail up` to create all required containers.
-3. Run `sail php artisan migrate` to migrate the database.
-(Optional) 3. Run `sail php artisan db:seed` tp create the admin user.
+1. Make sure docker is running
+2. Go to the project root folder
+3. Run `./up.sh` to create all required containers, migrate and seed database.
 
 ### API requests
 
-To interact with the api, you should send the desired http request, dependeding on what you're trying to do.
+To interact with the api, you should send the desired http request, dependending on what you're trying to do.
 
 #### Examples:
 Authenticate and create user don't require authentication. 
@@ -71,15 +68,19 @@ PUT /api/users/{id}/phone: Delete the user phone
 
 ## Commands I used to develop
 
-php artisan install:api
+- php artisan install:api
+- php artisan migrate
+- php artisan make:model ${name}
+- php artisan make:seeder ${name}
+- php artisan make:migration ${name} (If name matches the pattern: create_xxx_table, it uses snippets with the given name)
+- php artisan db:seed
 
-php artisan migrate
+## Considerations
 
-php artisan make:model ${name}
-
-php artisan make:seeder ${name}
-
-php artisan make:migration ${name}
-(If name matches the pattern: create_xxx_table, it uses snippets with the given name)
-
-php artisan db:seed
+- Project was created with laravel, [following this documentation](https://laravel.com/docs/11.x/installation#creating-an-application)
+- Eloquent ORM is used to communicate with database
+- Sanctum is used for authentication/authorization, also used middlewares to validate access
+- Authorization middleware only checks if the authenticated user is an admin
+- PostgreSQL was chosen as DB due to its simplicity to run in a container
+- Application is containerized, with simplified commands to run and delete containers
+- I decided not to use any UI library since it was a very simple application, and I didn't want to spend more time configuring a library than actually implementing it

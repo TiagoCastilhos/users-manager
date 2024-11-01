@@ -1,0 +1,1 @@
+backend/vendor/bin/sail up -d --wait && backend/vendor/bin/sail php artisan migrate && backend/vendor/bin/sail php artisan db:seed;
