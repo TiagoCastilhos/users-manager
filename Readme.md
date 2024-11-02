@@ -8,6 +8,8 @@ The app is using containers to ease local hosting process.
 1. Make sure docker is running
 2. Go to the project root folder
 3. Run `./up.sh` to create all required containers, migrate and seed database.
+3. In your browser, access http://localhost:5120/.
+3. Admin account email is super@admin.com, password: 1234 (if you want to delete users).
 
 ### API requests
 

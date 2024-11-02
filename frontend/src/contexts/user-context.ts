@@ -8,5 +8,5 @@ export interface UserContextDefinition {
 
 export const UserContext = React.createContext<UserContextDefinition>({
     authentication: undefined,
-    setAuthentication: (authentication?: Authentication) => { }
+    setAuthentication: () => { }
 });
