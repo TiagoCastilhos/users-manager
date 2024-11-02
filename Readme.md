@@ -44,7 +44,7 @@ POST /api/users: Create a user
 
 GET /api/users: Returns all users from database, including related entities. This is only accessible by admin users.
 
-DELETE /api/users/{id}: Delete a user
+DELETE /api/users/{id}: Delete a user. This is only accessible by admin users.
 
 PUT /api/users/{id}/address: Set the user address
 ``` json
