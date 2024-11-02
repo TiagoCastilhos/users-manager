@@ -83,4 +83,6 @@ PUT /api/users/{id}/phone: Delete the user phone
 - Authorization middleware only checks if the authenticated user is an admin
 - PostgreSQL was chosen as DB due to its simplicity to run in a container
 - Application is containerized, with simplified commands to run and delete containers
+- UI was not my focus (clearly). I focused on functionality.
 - I decided not to use any UI library since it was a very simple application, and I didn't want to spend more time configuring a library than actually implementing it
+- Admin page is taking longer than expected because I decided to use a router loader to load users list. API is taking too much time to respond the request, I read some topics saying it's because I'm running with a debug build (setting APP_DEBUG=false didn't help that much).

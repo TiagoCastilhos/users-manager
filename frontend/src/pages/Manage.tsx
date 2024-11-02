@@ -7,7 +7,7 @@ import { User } from "../models/user";
 import { Authentication } from "../models/authentication";
 
 export default function Manage() {
-    const { register, handleSubmit, reset, formState: { errors,  } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm();
 
     const onSubmit = async (values: FieldValues, authentication: Authentication) => {
         try {
@@ -65,7 +65,7 @@ export default function Manage() {
 
                             <div className={styles.buttonsContainer}>
                                 <Button name="Cancel" onClick={() => reset()} type="button" />
-                                <Button name="Save" type="submit" />
+                                <Button name="Save" type="submit" disabled={!isValid} />
                             </div>
                         </form>
                     </div>

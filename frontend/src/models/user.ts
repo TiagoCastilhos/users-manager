@@ -1,3 +1,6 @@
+import { Address } from "./address";
+import { Phone } from "./phone";
+
 export interface User {
     id?: number,
     userName: string,
@@ -5,5 +8,7 @@ export interface User {
     lastName: string,
     email: string,
     birthDate: string,
-    admin: boolean
+    admin: boolean,
+    phone?: Phone,
+    address?: Address
 }

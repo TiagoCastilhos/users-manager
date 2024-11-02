@@ -1,7 +1,7 @@
 import { Authentication } from "../models/authentication";
 import { User } from "../models/user";
+import { apiUrl, getJsonPostRequestInitOptions } from "./service";
 
-const apiUrl: string = import.meta.env.VITE_API_URL;
 const userCacheKey: string = 'user';
 const tokenCacheKey: string = 'token';
 
@@ -63,21 +63,4 @@ export function getAuthenticatedUser(): Authentication | undefined {
 export function signOut() {
     sessionStorage.removeItem(userCacheKey);
     sessionStorage.removeItem(tokenCacheKey);
-}
-
-function getJsonPostRequestInitOptions(body: any, method: "POST" | "PUT" | "GET" | "DELETE" = 'POST', authentication: Authentication | undefined = undefined): RequestInit {
-    const options: RequestInit = {
-        method: method,
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    };
-
-    if (authentication) {
-        //@ts-ignore
-        options.headers['Authorization'] = `Bearer ${authentication.token}`;
-    }
-
-    return options;
 }

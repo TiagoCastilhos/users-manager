@@ -1,0 +1,9 @@
+@use "sass:color";
+@use "../styles/colors.module.scss" as *;
+
+.container {
+    // background-color: color.adjust($color: $background-color, $lightness: -20%);
+    display: flex;
+    height: 100%;
+    margin: 4em;
+}
