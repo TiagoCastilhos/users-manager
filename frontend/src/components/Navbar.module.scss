@@ -1,4 +1,4 @@
-@use 'sass:color';
+@use "sass:color";
 @use "../styles/colors.module.scss" as *;
 
 .container {
@@ -7,6 +7,8 @@
 
     nav {
         height: 100%;
+        display: flex;
+        justify-content: space-between;
 
         ul {
             margin: 0;
@@ -26,6 +28,24 @@
                 align-self: center;
                 text-decoration: none;
                 padding: 16px 32px;
+            }
+        }
+
+        .userContext {
+            display: flex;
+            justify-items: center;
+            align-items: center;
+
+            .userContainer {
+                margin: 0 1em;
+            }
+
+            .logoutButton {
+                background-color: color.adjust($color: $background-color, $lightness: -20%);
+                padding: 0 32px;
+                cursor: pointer;
+                height: 100%;
+                align-content: center;
             }
         }
     }

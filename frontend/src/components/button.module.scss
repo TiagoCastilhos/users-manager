@@ -1,0 +1,9 @@
+@use "sass:color";
+@use "../styles/colors.module.scss" as *;
+
+.container {
+    background-color: color.adjust($color: $accent-color, $lightness: 10%);
+    font-size: 18px;
+    padding: 0.5em 1em;
+    border: 1px solid color.adjust($color: $accent-color, $lightness: -30%);
+}

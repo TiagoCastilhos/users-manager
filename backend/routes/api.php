@@ -14,8 +14,12 @@ Route::get('/users', [UsersController::class, 'get'])
 ->middleware(AuthenticationMiddleware::class)
 ->middleware(AuthorizationMiddleware::class);
 
-Route::delete('/users/{id}', [UsersController::class, 'delete'])
+Route::put('/users/{id}', [UsersController::class, 'update'])
 ->middleware(AuthenticationMiddleware::class);
+
+Route::delete('/users/{id}', [UsersController::class, 'delete'])
+->middleware(AuthenticationMiddleware::class)
+->middleware(AuthorizationMiddleware::class);
 
 Route::put('/users/{id}/address', [UsersController::class, 'updateAddress'])
 ->middleware(AuthenticationMiddleware::class);

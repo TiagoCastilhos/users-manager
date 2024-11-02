@@ -1,15 +1,18 @@
+@use "sass:color";
 @use "./styles/colors.module.scss" as *;
 
 .container {
+    background-color: $background-color;
+    
     .navbar {
-        position: static;
+        position: sticky;
+        top: 0;
         height: 3.5em;
+        z-index: 99;
+        border-bottom: 1px solid color.adjust($color: $background-color, $lightness: -40%);;
     }
 
     .app {
-        background-color: $background-color;
-        position: fixed;
-        height: 100%;
         width: 100%;
     }
 }

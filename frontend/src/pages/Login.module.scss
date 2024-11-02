@@ -1,3 +1,49 @@
+@use "sass:color";
+@use "../styles/colors.module.scss" as *;
+
 .container {
-    
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+    .formContainer {
+        margin-top: 4em;
+        margin-bottom: 4em;
+
+        form {
+            background-color: color.adjust($color: $background-color, $lightness: -20%);
+            border: 2px solid color.adjust($color: $background-color, $lightness: -30%);
+            padding: 1em 2em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            div {
+                margin: 1em 1em;
+                display: flex;
+                flex-direction: column;
+
+                label {
+                    font-size: 20px;
+                    font-weight: 500;
+                }
+
+                input {
+                    width: 20em;
+                    font-size: 22px;
+                }
+
+                span {
+                    color: $warning-color;
+                }
+            }
+        }
+
+        .buttonsContainer {
+            width: 100%;
+            display: flex;
+            flex-flow: row;
+            place-content: space-evenly;
+        }
+    }
 }

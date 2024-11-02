@@ -1,17 +1,17 @@
-import { useState } from "react";
-import styles from "./Login.module.scss";
-import signIn from "../services/authentication-service";
+import styles from "./login.module.scss";
+import { signIn } from "../services/authentication-service";
 import { UserContext } from "../contexts/user-context";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/button";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
-    const [email, setEmail] = useState<string>();
-    const [password, setPassword] = useState<string>();
+    const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
+    const onSubmit = async (email: string, password: string) => {
         try {
-            return await signIn(email!, password!);
+            return await signIn(email, password);
         }
         catch (err) {
             console.error(err);
@@ -20,29 +20,35 @@ export default function Login() {
 
     return (
         <UserContext.Consumer>
-            {({ authentication, setAuthentication }) => (
+            {({ setAuthentication }) => (
                 <div className={styles.container}>
-                    <h2>Welcome back!</h2>
-                    <h4>Please, provide your credentials:</h4>
+                    <div className={styles.formContainer}>
+                        <form
+                            onSubmit={handleSubmit(async (values) => {
+                                const authentication = await onSubmit(values.email, values.password);
+                                if (authentication) {
+                                    setAuthentication(authentication);
+                                    navigate("/home");
+                                }
+                            })}>
+                            <h2>Welcome back!</h2>
+                            <h3>Please, provide your credentials:</h3>
 
-                    <form onSubmit={async (e) => {
-                        const authentication = await onSubmit(e);
-                        if (authentication) {
-                            setAuthentication(authentication);
-                        }
-                    }}>
-                        <div>
-                            <label htmlFor="email">Email</label>
-                            <input type="text" onChange={(v) => setEmail(v.target.value)}></input>
-                        </div>
-                        <div>
-                            <label htmlFor="password">Password</label>
-                            <input type="password" onChange={(v) => setPassword(v.target.value)}></input>
-                        </div>
-                        <div>
-                            <button type="submit">Login</button>
-                        </div>
-                    </form>
+                            <div>
+                                <label htmlFor="email">Email</label>
+                                <input type="text" {...register("email", { required: { value: true, message: 'Email is required' }, pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Incorrect format' } })}></input>
+                                {errors.email && <span>{errors.email.message as string}</span>}
+                            </div>
+                            <div>
+                                <label htmlFor="password">Password</label>
+                                <input type="password" {...register("password", { required: { value: true, message: 'Password is required' } })}></input>
+                                {errors.password && <span>{errors.password.message as string}</span>}
+                            </div>
+                            <div>
+                                <Button name="Login" type="submit" />
+                            </div>
+                        </form>
+                    </div>
                 </div>
             )}
         </UserContext.Consumer>

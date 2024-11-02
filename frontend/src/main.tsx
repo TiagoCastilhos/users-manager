@@ -5,11 +5,13 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import Home from './pages/Home.tsx';
-import Login from './pages/Login.tsx';
-import Register from './pages/Register.tsx';
-import Manage from './pages/Manage.tsx';
-import App from './App.tsx';
+import Home from './pages/home.tsx';
+import Login from './pages/login.tsx';
+import Register from './pages/register.tsx';
+import Manage from './pages/manage.tsx';
+import App from './app.tsx';
+import { ProtectedRoute } from './pages/protected-route.tsx';
+import Admin from './pages/Admin.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <Home></Home>,
+
       },
       {
         path: "/register",
@@ -33,7 +36,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/manage",
-        element: <Manage></Manage>,
+        element:
+          <ProtectedRoute>
+            <Manage></Manage>
+          </ProtectedRoute>,
+      },
+      {
+        path: "/admin",
+        element:
+          <ProtectedRoute adminOnly={true}>
+            <Admin></Admin>
+          </ProtectedRoute>,
       },
     ]
   }

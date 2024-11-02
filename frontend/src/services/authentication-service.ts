@@ -1,10 +1,11 @@
 import { Authentication } from "../models/authentication";
+import { User } from "../models/user";
 
 const apiUrl: string = import.meta.env.VITE_API_URL;
 const userCacheKey: string = 'user';
 const tokenCacheKey: string = 'token';
 
-export default async function signIn(email: string, password: string) {
+export async function signIn(email: string, password: string) {
     const response = await fetch(`${apiUrl}/authenticate`, getJsonPostRequestInitOptions({ email: email, password: password }));
     const responseData = await response.json();
 
@@ -21,13 +22,37 @@ export default async function signIn(email: string, password: string) {
     return authentication;
 }
 
-export function getAuthenticatedUser() : Authentication | undefined {
+export async function createUser(user: User, password: string) {
+    const response = await fetch(`${apiUrl}/users`, getJsonPostRequestInitOptions({ ...user, password: password }));
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseData.error);
+    }
+
+    return await signIn(user.email, password);
+}
+
+export async function updateUser(user: User, authentication: Authentication) {
+    const options = getJsonPostRequestInitOptions(user, 'PUT', authentication);
+
+    const response = await fetch(`${apiUrl}/users/${user.id}`, options);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseData.error);
+    }
+
+    sessionStorage.setItem(userCacheKey, JSON.stringify(responseData));
+}
+
+export function getAuthenticatedUser(): Authentication | undefined {
     const cachedUser = sessionStorage.getItem(userCacheKey);
     const cachedToken = sessionStorage.getItem(tokenCacheKey);
 
     if (cachedUser && cachedToken) {
         return {
-            token: JSON.parse(cachedToken),
+            token: cachedToken,
             user: JSON.parse(cachedUser),
         }
     }
@@ -40,12 +65,19 @@ export function signOut() {
     sessionStorage.removeItem(tokenCacheKey);
 }
 
-function getJsonPostRequestInitOptions(body: any): RequestInit {
-    return {
-        method: 'POST',
+function getJsonPostRequestInitOptions(body: any, method: "POST" | "PUT" | "GET" | "DELETE" = 'POST', authentication: Authentication | undefined = undefined): RequestInit {
+    const options: RequestInit = {
+        method: method,
         body: JSON.stringify(body),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         }
+    };
+
+    if (authentication) {
+        //@ts-ignore
+        options.headers['Authorization'] = `Bearer ${authentication.token}`;
     }
+
+    return options;
 }

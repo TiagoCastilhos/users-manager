@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Http\Requests\AddressPutRequest;
-use App\Http\Requests\PhonePutRequest;
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PhoneRequest;
+use App\Http\Requests\UserPutRequest;
 use App\Http\Requests\UserPostRequest;
 use App\Models\Address;
 use App\Models\Phone;
@@ -54,12 +55,29 @@ class UsersService implements UsersServiceInterface
         }
     }
 
+    public function update(UserPutRequest $request, int $userId): ?User
+    {
+        $result = User::firstWhere('id', '=', $userId)?->update([
+            "first_name" => $request->firstName,
+            "last_name" => $request->lastName,
+            "user_name" => $request->userName,
+            "birth_date" => $request->birthDate,
+            "email" => $request->email
+        ], );
+
+        if ($result) {
+            return User::firstWhere("id", "=", $userId);
+        }
+
+        return null;
+    }
+
     public function delete(int $id): bool
     {
         return User::destroy($id) > 0;
     }
 
-    public function upsertAddress(AddressPutRequest $address, int $userId): bool
+    public function upsertAddress(AddressRequest $address, int $userId): bool
     {
         //ToDo: Use a transaction to avoid deleting an address and db failed to insert the new value
         if (!$this->deleteAddress($userId)) {
@@ -76,7 +94,7 @@ class UsersService implements UsersServiceInterface
         return true;
     }
 
-    public function upsertPhone(PhonePutRequest $phone, int $userId): bool
+    public function upsertPhone(PhoneRequest $phone, int $userId): bool
     {
         //ToDo: Use a transaction to avoid deleting a phone and db failed to insert the new value
         if (!$this->deletePhone($userId)) {

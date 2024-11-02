@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddressPutRequest;
-use App\Http\Requests\PhonePutRequest;
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PhoneRequest;
 use App\Http\Requests\UserPostRequest;
+use App\Http\Requests\UserPutRequest;
 use App\Services\UsersService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,6 +38,19 @@ class UsersController extends Controller
         ], 503);
     }
 
+    public function update(UserPutRequest $request, int $id): JsonResponse
+    {
+        $user = $this->usersService->update($request, $id);
+
+        if ($user != null) {
+            return response()->json($user, 200);
+        }
+
+        return response()->json([
+            'error' => "Could not find user $id"
+        ], 404);
+    }
+
     public function delete(Request $request, int $id): JsonResponse
     {
         $result = $this->usersService->delete($id);
@@ -52,7 +66,7 @@ class UsersController extends Controller
         ], 400);
     }
 
-    public function updateAddress(AddressPutRequest $request, $id): JsonResponse
+    public function updateAddress(AddressRequest $request, $id): JsonResponse
     {
         $result = $this->usersService->upsertAddress($request, $id);
 
@@ -67,7 +81,7 @@ class UsersController extends Controller
         ], 404);
     }
 
-    public function updatePhone(PhonePutRequest $request, $id): JsonResponse
+    public function updatePhone(PhoneRequest $request, $id): JsonResponse
     {
         $result = $this->usersService->upsertPhone($request, $id);
 
