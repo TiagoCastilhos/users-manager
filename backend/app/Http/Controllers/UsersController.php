@@ -66,28 +66,20 @@ class UsersController extends Controller
         ], 400);
     }
 
-    public function updateAddress(AddressRequest $request, $id): JsonResponse
+    public function getPhone(Request $request, int $id): JsonResponse
     {
-        $result = $this->usersService->upsertAddress($request, $id);
+        $result = $this->usersService->getPhone($id);
 
-        if ($result) {
-            return response()->json([
-                "id"=> $id
-            ], 201);
-        }
-
-        return response()->json([
-            'error' => "Could not find user $id"
-        ], 404);
+        return response()->json($result, 200);
     }
 
-    public function updatePhone(PhoneRequest $request, $id): JsonResponse
+    public function updatePhone(PhoneRequest $request, int $id): JsonResponse
     {
         $result = $this->usersService->upsertPhone($request, $id);
 
         if ($result) {
             return response()->json([
-                "id"=> $id
+                "id" => $id
             ], 201);
         }
 
@@ -96,13 +88,13 @@ class UsersController extends Controller
         ], 404);
     }
 
-    public function deleteAddress(Request $request, $id): JsonResponse
+    public function deletePhone(Request $request, int $id): JsonResponse
     {
-        $result = $this->usersService->deleteAddress($id);
+        $result = $this->usersService->deletePhone($id);
 
         if ($result) {
             return response()->json([
-                "id"=> $id
+                "id" => $id
             ], 200);
         }
 
@@ -111,13 +103,35 @@ class UsersController extends Controller
         ], 404);
     }
 
-    public function deletePhone(Request $request, $id): JsonResponse
+    public function getAddress(Request $request, int $id): JsonResponse
     {
-        $result = $this->usersService->deletePhone($id);
+        $result = $this->usersService->getAddress($id);
+
+        return response()->json($result, 200);
+    }
+
+    public function updateAddress(AddressRequest $request, int $id): JsonResponse
+    {
+        $result = $this->usersService->upsertAddress($request, $id);
 
         if ($result) {
             return response()->json([
-                "id"=> $id
+                "id" => $id
+            ], 201);
+        }
+
+        return response()->json([
+            'error' => "Could not find user $id"
+        ], 404);
+    }
+
+    public function deleteAddress(Request $request, int $id): JsonResponse
+    {
+        $result = $this->usersService->deleteAddress($id);
+
+        if ($result) {
+            return response()->json([
+                "id" => $id
             ], 200);
         }
 

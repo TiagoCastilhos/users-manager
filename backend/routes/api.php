@@ -21,14 +21,20 @@ Route::delete('/users/{id}', [UsersController::class, 'delete'])
 ->middleware(AuthenticationMiddleware::class)
 ->middleware(AuthorizationMiddleware::class);
 
-Route::put('/users/{id}/address', [UsersController::class, 'updateAddress'])
+Route::get('/users/{id}/phone', [UsersController::class, 'getPhone'])
 ->middleware(AuthenticationMiddleware::class);
 
 Route::put('/users/{id}/phone', [UsersController::class, 'updatePhone'])
 ->middleware(AuthenticationMiddleware::class);
 
-Route::delete('/users/{id}/address', [UsersController::class, 'deleteAddress'])
+Route::delete('/users/{id}/phone', [UsersController::class, 'deletePhone'])
 ->middleware(AuthenticationMiddleware::class);
 
-Route::delete('/users/{id}/phone', [UsersController::class, 'deletePhone'])
+Route::get('/users/{id}/address', [UsersController::class, 'getAddress'])
+->middleware(AuthenticationMiddleware::class);
+
+Route::put('/users/{id}/address', [UsersController::class, 'updateAddress'])
+->middleware(AuthenticationMiddleware::class);
+
+Route::delete('/users/{id}/address', [UsersController::class, 'deleteAddress'])
 ->middleware(AuthenticationMiddleware::class);

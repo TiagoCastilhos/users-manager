@@ -34,7 +34,6 @@ class UserPutRequest extends FormRequest
             'firstName' => 'required|min:2|max:50',
             'lastName' => 'required|min:2|max:50',
             'userName' => 'required|min:4|max:16',
-            'email' => 'required|email|max:255',
             'birthDate' => 'required|date',
         ];
     }

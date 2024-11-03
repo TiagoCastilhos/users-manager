@@ -1,6 +1,10 @@
 @use "sass:color";
 @use "../styles/colors.module.scss" as *;
 
+.active {
+    background-color: color.adjust($color: $accent-color, $lightness: 10%);
+}
+
 .container {
     background-color: color.adjust($color: $background-color, $lightness: -10%);
     height: 100%;

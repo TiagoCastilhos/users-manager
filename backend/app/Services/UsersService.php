@@ -61,8 +61,7 @@ class UsersService implements UsersServiceInterface
             "first_name" => $request->firstName,
             "last_name" => $request->lastName,
             "user_name" => $request->userName,
-            "birth_date" => $request->birthDate,
-            "email" => $request->email
+            "birth_date" => $request->birthDate
         ], );
 
         if ($result) {
@@ -77,21 +76,9 @@ class UsersService implements UsersServiceInterface
         return User::destroy($id) > 0;
     }
 
-    public function upsertAddress(AddressRequest $address, int $userId): bool
+    public function getPhone(int $userId): ?Phone
     {
-        //ToDo: Use a transaction to avoid deleting an address and db failed to insert the new value
-        if (!$this->deleteAddress($userId)) {
-            return false;
-        }
-
-        $address = Address::create([
-            "country" => $address->country,
-            "state" => $address->state,
-            "city" => $address->city,
-            "user_id" => $userId
-        ]);
-
-        return true;
+        return Phone::firstWhere('user_id', '=', $userId);
     }
 
     public function upsertPhone(PhoneRequest $phone, int $userId): bool
@@ -111,18 +98,6 @@ class UsersService implements UsersServiceInterface
         return true;
     }
 
-    public function deleteAddress(int $userId): bool
-    {
-        $user = User::firstWhere('id', '=', $userId);
-
-        if ($user == null) {
-            return false;
-        }
-
-        Address::where('user_id', '=', $userId)?->delete();
-        return true;
-    }
-
     public function deletePhone(int $userId): bool
     {
         $user = User::firstWhere('id', '=', $userId);
@@ -132,6 +107,40 @@ class UsersService implements UsersServiceInterface
         }
 
         Phone::where('user_id', '=', $userId)?->delete();
+        return true;
+    }
+
+    public function getAddress(int $userId): ?Address
+    {
+        return Address::firstWhere('user_id', '=', $userId);
+    }
+
+    public function upsertAddress(AddressRequest $address, int $userId): bool
+    {
+        //ToDo: Use a transaction to avoid deleting an address and db failed to insert the new value
+        if (!$this->deleteAddress($userId)) {
+            return false;
+        }
+
+        $address = Address::create([
+            "country" => $address->country,
+            "state" => $address->state,
+            "city" => $address->city,
+            "user_id" => $userId
+        ]);
+
+        return true;
+    }
+
+    public function deleteAddress(int $userId): bool
+    {
+        $user = User::firstWhere('id', '=', $userId);
+
+        if ($user == null) {
+            return false;
+        }
+
+        Address::where('user_id', '=', $userId)?->delete();
         return true;
     }
 }

@@ -46,19 +46,31 @@ export default function Register() {
 
                             <div>
                                 <label htmlFor="username">User name</label>
-                                <input type="text" {...register("userName", { required: { value: true, message: 'User name is required' } })}></input>
+                                <input type="text" {...register("userName", {
+                                    required: { value: true, message: 'User name is required' },
+                                    minLength: { value: 4, message: 'User name must have at least 4 characters' },
+                                    maxLength: { value: 16, message: 'User name cannot have more than 16 characters' },
+                                })}></input>
                                 {errors.userName && <span>{errors.userName.message as string}</span>}
                             </div>
 
                             <div>
                                 <label htmlFor="firstname">First name</label>
-                                <input type="text" {...register("firstName", { required: { value: true, message: 'First name is required' } })}></input>
+                                <input type="text" {...register("firstName", {
+                                    required: { value: true, message: 'First name is required' },
+                                    minLength: { value: 2, message: 'First name must have at least 2 characters' },
+                                    maxLength: { value: 50, message: 'First name cannot have more than 50 characters' },
+                                })}></input>
                                 {errors.firstName && <span>{errors.firstName.message as string}</span>}
                             </div>
 
                             <div>
                                 <label htmlFor="lastname">Last name</label>
-                                <input type="text" {...register("lastName", { required: { value: true, message: 'Last name is required' } })}></input>
+                                <input type="text" {...register("lastName", {
+                                    required: { value: true, message: 'Last name is required' },
+                                    minLength: { value: 2, message: 'Last name must have at least 2 characters' },
+                                    maxLength: { value: 50, message: 'Last name cannot have more than 50 characters' },
+                                })}></input>
                                 {errors.lastName && <span>{errors.lastName.message as string}</span>}
                             </div>
 
@@ -70,13 +82,20 @@ export default function Register() {
 
                             <div>
                                 <label htmlFor="email">Email</label>
-                                <input type="text" {...register("email", { required: { value: true, message: 'Email is required' }, pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Incorrect format' } })}></input>
+                                <input type="text" {...register("email", {
+                                    required: { value: true, message: 'Email is required' },
+                                    pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Incorrect format' },
+                                    maxLength: { value: 255, message: 'Email cannot have more than 255 characters' },
+                                })}></input>
                                 {errors.email && <span>{errors.email.message as string}</span>}
                             </div>
 
                             <div>
                                 <label htmlFor="password">Password</label>
-                                <input type="password" {...register("password", { required: { value: true, message: 'Password is required' } })}></input>
+                                <input type="password" {...register("password", {
+                                    required: { value: true, message: 'Password is required' },
+                                    minLength: { value: 6, message: 'Password must have at least 6 characters' },
+                                })}></input>
                                 {errors.password && <span>{errors.password.message as string}</span>}
                             </div>
 

@@ -13,7 +13,10 @@ import App from './app.tsx';
 import { ProtectedRoute } from './pages/protected-route.tsx';
 import Admin from './pages/admin.tsx';
 import { getUsers } from './services/users-service.ts';
-import { getAuthenticatedUser } from './services/authentication-service.ts';
+import { getAddress, getAuthenticatedUser, getPhone } from './services/authentication-service.ts';
+import ManagePhone from './pages/manage-phone.tsx';
+import ManageAddress from './pages/manage-address.tsx';
+import ManageUser from './pages/manage-user.tsx';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +45,40 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <Manage></Manage>
           </ProtectedRoute>,
+        children: [
+          {
+            index: true, element: <Navigate to="/manage/user" replace />
+          },
+          {
+            path: "/manage/user",
+            element:
+              <ProtectedRoute>
+                <ManageUser></ManageUser>
+              </ProtectedRoute>,
+          },
+          {
+            path: "/manage/phone",
+            element:
+              <ProtectedRoute>
+                <ManagePhone></ManagePhone>
+              </ProtectedRoute>,
+            loader: async () => {
+              const authenticaton = getAuthenticatedUser()
+              return await getPhone(authenticaton!);
+            },
+          },
+          {
+            path: "/manage/address",
+            element:
+              <ProtectedRoute>
+                <ManageAddress></ManageAddress>
+              </ProtectedRoute>,
+            loader: async () => {
+              const authenticaton = getAuthenticatedUser()
+              return await getAddress(authenticaton!);
+            },
+          }
+        ]
       },
       {
         path: "/admin",

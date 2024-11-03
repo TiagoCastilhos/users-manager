@@ -9,7 +9,7 @@ export function getJsonPostRequestInitOptions(
         
     const options: RequestInit = {
         method: method,
-        body: JSON.stringify(body),
+        body: body? JSON.stringify(body) : undefined,
         headers: {
             'Content-Type': 'application/json',
         }

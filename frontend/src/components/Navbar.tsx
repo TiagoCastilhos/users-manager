@@ -35,7 +35,7 @@ export default function Navbar() {
                                                 to={link.toLowerCase()}
                                                 className={({ isActive }) =>
                                                     isActive
-                                                        ? "active"
+                                                        ? styles.active
                                                         : ""
                                                 }
                                             >

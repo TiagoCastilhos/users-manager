@@ -1,4 +1,6 @@
+import { Address } from "../models/address";
 import { Authentication } from "../models/authentication";
+import { Phone } from "../models/phone";
 import { User } from "../models/user";
 import { apiUrl, getJsonPostRequestInitOptions } from "./service";
 
@@ -44,6 +46,76 @@ export async function updateUser(user: User, authentication: Authentication) {
     }
 
     sessionStorage.setItem(userCacheKey, JSON.stringify(responseData));
+}
+
+export async function getPhone(authentication: Authentication) {
+    const options = getJsonPostRequestInitOptions(undefined, 'GET', authentication);
+
+    const response = await fetch(`${apiUrl}/users/${authentication.user.id}/phone`, options);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseData.error);
+    }
+
+    return responseData ?? null;
+}
+
+export async function updatePhone(phone: Phone, authentication: Authentication) {
+    const options = getJsonPostRequestInitOptions(phone, 'PUT', authentication);
+
+    const response = await fetch(`${apiUrl}/users/${authentication.user.id}/phone`, options);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseData.error);
+    }
+}
+
+export async function deletePhone(authentication: Authentication) {
+    const options = getJsonPostRequestInitOptions(undefined, 'DELETE', authentication);
+
+    const response = await fetch(`${apiUrl}/users/${authentication.user.id}/phone`, options);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseData.error);
+    }
+}
+
+export async function getAddress(authentication: Authentication) {
+    const options = getJsonPostRequestInitOptions(undefined, 'GET', authentication);
+
+    const response = await fetch(`${apiUrl}/users/${authentication.user.id}/address`, options);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseData.error);
+    }
+
+    return responseData ?? null;
+}
+
+export async function updateAddress(address: Address, authentication: Authentication) {
+    const options = getJsonPostRequestInitOptions(address, 'PUT', authentication);
+
+    const response = await fetch(`${apiUrl}/users/${authentication.user.id}/address`, options);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseData.error);
+    }
+}
+
+export async function deleteAddress(authentication: Authentication) {
+    const options = getJsonPostRequestInitOptions(undefined, 'DELETE', authentication);
+
+    const response = await fetch(`${apiUrl}/users/${authentication.user.id}/address`, options);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseData.error);
+    }
 }
 
 export function getAuthenticatedUser(): Authentication | undefined {
