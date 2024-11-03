@@ -46,16 +46,9 @@ GET /api/users: Returns all users from database, including related entities. Thi
 
 DELETE /api/users/{id}: Delete a user. This is only accessible by admin users.
 
-PUT /api/users/{id}/address: Set the user address
-``` json
-{
-    "country": "Brazil",
-    "state": "RS",
-    "city": "Caxias do Sul 2"
-}
-```
+GET /api/users/{id}/phone: Return user's phone
 
-PUT /api/users/{id}/phone: Set the user phone
+PUT /api/users/{id}/phone: Set user's phone
 ``` json
 {
     "areaCode": "11",
@@ -64,9 +57,20 @@ PUT /api/users/{id}/phone: Set the user phone
 }
 ```
 
-DELETE /api/users/{id}/address: Delete the user address
+DELETE /api/users/{id}/phone: Delete user's phone
 
-PUT /api/users/{id}/phone: Delete the user phone
+GET /api/users/{id}/address: Return user's address
+
+PUT /api/users/{id}/address: Set user's address
+``` json
+{
+    "country": "Brazil",
+    "state": "RS",
+    "city": "Caxias do Sul 2"
+}
+```
+
+DELETE /api/users/{id}/address: Delete user's address
 
 ## Commands I used to develop
 
@@ -85,6 +89,6 @@ PUT /api/users/{id}/phone: Delete the user phone
 - Authorization middleware only checks if the authenticated user is an admin
 - PostgreSQL was chosen as DB due to its simplicity to run in a container
 - Application is containerized, with simplified commands to run and delete containers
-- UI was not my focus (clearly). I focused on functionality.
-- I decided not to use any UI library since it was a very simple application, and I didn't want to spend more time configuring a library than actually implementing it
-- Admin page is taking longer than expected because I decided to use a router loader to load users list. API is taking too much time to respond the request, I read some topics saying it's because I'm running with a debug build (setting APP_DEBUG=false didn't help that much).
+- UI was not my focus (clearly), I focused on functionality
+- I decided not to use any UI library since it is a very simple application, and I didn't want to spend more time configuring a library than actually implementing it. Used `react-hook-form` for forms, `ag-grid-react` for admin page grid and `react-router-dom` for routing.
+- Admin page, manage phone and address are taking longer than expected because I decided to use a router loader to load users list. API is taking too much time to respond any request (+6s). I read some topics and tried a bunch of suggestions, but none of them worked.

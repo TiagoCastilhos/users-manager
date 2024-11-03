@@ -7,7 +7,7 @@ import { User } from "../models/user";
 import { Authentication } from "../models/authentication";
 
 export default function ManageUser() {
-    const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = async (values: FieldValues, authentication: Authentication) => {
         try {
